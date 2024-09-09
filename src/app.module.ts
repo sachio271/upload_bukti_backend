@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './prisma.service';
 import { UploadsModule } from './uploads/uploads.module';
 import { FileModule } from './file/file.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { FileModule } from './file/file.module';
     AuthModule,
     UploadsModule,
     FileModule,
+    AdminModule,
   ],
   controllers: [],
   providers: [PrismaService],

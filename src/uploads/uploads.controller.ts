@@ -18,19 +18,13 @@ export class UploadsController {
   constructor(private readonly uploadsService: UploadsService) {}
 
   @Post()
-  @AuthWithRoles('admin')
   @UseInterceptors(FileInterceptor('img'))
   create(@CurrentUser() user: user, @UploadedFile() file: Express.Multer.File) {
     return this.uploadsService.create(user, file);
   }
 
-  @Get()
-  findAll() {
-    return this.uploadsService.findAll();
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.uploadsService.findOne(+id);
+  findOne(@CurrentUser() user: user, @Param('id') id: string) {
+    return this.uploadsService.findOne(+id, user);
   }
 }
