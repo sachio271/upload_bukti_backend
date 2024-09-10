@@ -8,10 +8,11 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { user } from '@prisma/client';
+import { AuthWithRoles } from 'src/auth/auth.decorator';
 import { CurrentUser } from 'src/current-user/current-user.decorator';
 import { UploadsService } from './uploads.service';
 
-// @AuthWithRoles()
+@AuthWithRoles()
 @Controller('uploads')
 export class UploadsController {
   constructor(private readonly uploadsService: UploadsService) {}

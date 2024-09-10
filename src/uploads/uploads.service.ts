@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { user } from '@prisma/client';
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { PrismaService } from 'src/prisma.service';
@@ -39,11 +43,14 @@ export class UploadsService {
   }
 
   async findOne(id: number, user: user) {
-    const data = await this.prismaService.uploads.findUnique({
+    const data = await this.prismaService.uploads.findFirst({
       where: {
-        id: id,
+        user_id: id,
       },
     });
+    if (!data) {
+      throw new NotFoundException('File not found');
+    }
     if (data.user_id !== user.id) {
       throw new UnauthorizedException(
         'You are not allowed to access this file',
